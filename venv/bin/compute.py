@@ -1,5 +1,3 @@
-from prettytable import PrettyTable
-
 a1Percentage = 7.5
 a2Percentage = 7.5
 projectPercentage = 25
@@ -20,7 +18,10 @@ fail = FailGrade()
 
 def convertUnitermToFinal(fullPoint, score, item):
     fullPoint = int(fullPoint)
-    score = float(score)
+    if score!="":
+        score = float(score)
+    else:
+        score=0
     switcher = {
         "a1": score / fullPoint * a1Percentage,
         "a2": score / fullPoint * a2Percentage,
@@ -124,35 +125,40 @@ def process_option(option, students, fullPoint):
 
 
 def process_option1(students, fullPoint):
-    table = PrettyTable()
     option = input("Please input the component you want to see(A1, A2, PR, T1, T2):")
     option = option.lower()
     while option == "a1" or option == "a2" or option == "pr" or option == "t1" or option == "t2":
         if option == "a1":
-            print("A1 grades (", fullPoint.A1, ")")
+            print("A1 grades (" + str(fullPoint.A1) + ")")
             for student in students:
-                print(student.id + "\t" + student.lastName + ", " + student.firstName + "\t" + student.a1)
+                t = '{0:<5} {1:<13} {2}'.format(student.id, student.lastName + ", " + student.firstName, student.a1)
+                print(str(t).strip("\n"))
             break
         elif option == "a2":
-            table.add_row(["A2 grades (", fullPoint.A2, ")"])
+            print("A2 grades (" + str(fullPoint.A2) + ")")
             for student in students:
-                table.add_row([student.id, student.lastName + ", " + student.firstName, student.a2])
-            return table
+                t = '{0:<5} {1:<13} {2}'.format(student.id, student.lastName + ", " + student.firstName, student.a2)
+                print(str(t).strip("\n"))
+            break
         elif option == "pr":
-            table.add_row(["PR grades (", fullPoint.PR, ")"])
+            print("PR grades (" + str(fullPoint.PR) + ")")
             for student in students:
-                table.add_row([student.id, student.lastName + ", " + student.firstName, student.project])
-            return table
+                t = '{0:<5} {1:<13} {2}'.format(student.id, student.lastName + ", " + student.firstName,
+                                                student.project)
+                print(str(t).strip("\n"))
+            break
         elif option == "t1":
-            table.add_row(["T1 grade (", fullPoint.T1, ")"])
+            print("T1 grades (" + str(fullPoint.T1) + ")")
             for student in students:
-                table.add_row([student.id, student.lastName + ", " + student.firstName, student.test1])
-            return table
+                t = '{0:<5} {1:<13} {2}'.format(student.id, student.lastName + ", " + student.firstName, student.test1)
+                print(str(t).strip("\n"))
+            break
         elif option == "t2":
-            table.add_row(["T2 grade (", fullPoint.T2, ")"])
+            print("T2 grades (" + str(fullPoint.T2) + ")")
             for student in students:
-                table.add_row([student.id, student.lastName + ", " + student.firstName, student.test2])
-            return table
+                t = '{0:<5} {1:<13} {2}'.format(student.id, student.lastName + ", " + student.firstName, student.test2)
+                print(str(t).strip("\n"))
+            break
         else:
             print("Your input is error. Please input again.")
             option = raw_input("Please input the component you want to see(A1, A2, PR, T1, T2):")
@@ -166,35 +172,40 @@ def process_option2(students, fullPoint):
         if option == "a1":
             sum = 0
             for student in students:
-                sum += float(student.a1)
+                if student.a1!="":
+                    sum += float(student.a1)
             average = sum / len(students)
             aver = "A1 average:" + str(average) + "/" + str(fullPoint.A1)
             return aver
         elif option == "a2":
             sum = 0
             for student in students:
-                sum += float(student.a2)
+                if student.a2 != "":
+                    sum += float(student.a2)
             average = sum / len(students)
             aver = "A2 average:" + str(average) + "/" + str(fullPoint.A2)
             return aver
         elif option == "pr":
             sum = 0
             for student in students:
-                sum += float(student.project)
+                if student.project != "":
+                    sum += float(student.project)
             average = sum / len(students)
             aver = "PR average:" + str(average) + "/" + str(fullPoint.PR)
             return aver
         elif option == "t1":
             sum = 0
             for student in students:
-                sum += float(student.test1)
+                if student.test1 != "":
+                    sum += float(student.test1)
             average = sum / len(students)
             aver = "T1 average:" + str(average) + "/" + str(fullPoint.T1)
             return aver
         elif option == "t2":
             sum = 0
             for student in students:
-                sum += float(student.test2)
+                if student.test2 != "":
+                    sum += float(student.test2)
             average = sum / len(students)
             aver = "T2 average:" + str(average) + "/" + str(fullPoint.T2)
             return aver
@@ -205,12 +216,13 @@ def process_option2(students, fullPoint):
 
 
 def process_option3(students):
-    table = PrettyTable(["ID", "LN", "FN", "A1", "A2", "PR", "T1", "T2", "GR", "FL"]);
+    print("ID".ljust(6, " "), "LN".ljust(6, " "), "FN".ljust(6, " "), "A1".ljust(6, " "), "A2".ljust(6, " "),
+          "PR".ljust(6, " "), "T1".ljust(6, " "), "T2".ljust(6, " "), "GR".ljust(6, " "), "FL".ljust(6, " "))
     for student in students:
-        table.add_row(
-            [student.id, student.lastName, student.firstName, student.a1, student.a2, student.project, student.test1,
-             student.test2, student.GR, student.FL])
-    return table
+        print(student.id.ljust(6, " "), student.lastName.ljust(6, " "), student.firstName.ljust(6, " "),
+              student.a1.ljust(6, " "), student.a2.ljust(6, " "), student.project.ljust(6, " "),
+              student.test1.ljust(6, " "), student.test2.ljust(6, " "), str(student.GR).ljust(6, " "),
+              student.FL.ljust(6, " "))
 
 
 def process_option4(students):
