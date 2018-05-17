@@ -18,10 +18,10 @@ fail = FailGrade()
 
 def convertUnitermToFinal(fullPoint, score, item):
     fullPoint = int(fullPoint)
-    if score!="":
+    if score != "":
         score = float(score)
     else:
-        score=0
+        score = 0
     switcher = {
         "a1": score / fullPoint * a1Percentage,
         "a2": score / fullPoint * a2Percentage,
@@ -96,7 +96,7 @@ def add_GR(students, fullPoint):
         project = convertUnitermToFinal(fullPoint.PR, student.project, "project")
         t1 = convertUnitermToFinal(fullPoint.T1, student.test1, "t1")
         t2 = convertUnitermToFinal(fullPoint.T2, student.test2, "t2")
-        student.set_GR(a1 + a2 + project + t1 + t2)
+        student.set_GR(round(a1 + a2 + project + t1 + t2, 2))
 
 
 def add_FL(students):
@@ -111,11 +111,11 @@ def process_option(option, students, fullPoint):
     elif option == "2":
         print(process_option2(students, fullPoint))
     elif option == "3":
-        print(process_option3(students))
+        process_option3(students)
     elif option == "4":
-        print(process_option4(students))
+        process_option4(students)
     elif option == "5":
-        print(process_option5(students))
+        process_option5(students)
     else:
         print("GoodBye")
     if option == "6":
@@ -127,91 +127,101 @@ def process_option(option, students, fullPoint):
 def process_option1(students, fullPoint):
     option = input("Please input the component you want to see(A1, A2, PR, T1, T2):")
     option = option.lower()
-    while option == "a1" or option == "a2" or option == "pr" or option == "t1" or option == "t2":
+    while 1:
         if option == "a1":
             print("A1 grades (" + str(fullPoint.A1) + ")")
             for student in students:
-                t = '{0:<5} {1:<13} {2}'.format(student.id, student.lastName + ", " + student.firstName, student.a1)
+                t = '{0:<5} {1:<14} {2}'.format(student.id, student.lastName + ", " + student.firstName, student.a1)
                 print(str(t).strip("\n"))
             break
         elif option == "a2":
             print("A2 grades (" + str(fullPoint.A2) + ")")
             for student in students:
-                t = '{0:<5} {1:<13} {2}'.format(student.id, student.lastName + ", " + student.firstName, student.a2)
+                t = '{0:<5} {1:<14} {2}'.format(student.id, student.lastName + ", " + student.firstName, student.a2)
                 print(str(t).strip("\n"))
             break
         elif option == "pr":
             print("PR grades (" + str(fullPoint.PR) + ")")
             for student in students:
-                t = '{0:<5} {1:<13} {2}'.format(student.id, student.lastName + ", " + student.firstName,
+                t = '{0:<5} {1:<14} {2}'.format(student.id, student.lastName + ", " + student.firstName,
                                                 student.project)
                 print(str(t).strip("\n"))
             break
         elif option == "t1":
             print("T1 grades (" + str(fullPoint.T1) + ")")
             for student in students:
-                t = '{0:<5} {1:<13} {2}'.format(student.id, student.lastName + ", " + student.firstName, student.test1)
+                t = '{0:<5} {1:<14} {2}'.format(student.id, student.lastName + ", " + student.firstName, student.test1)
                 print(str(t).strip("\n"))
             break
         elif option == "t2":
             print("T2 grades (" + str(fullPoint.T2) + ")")
             for student in students:
-                t = '{0:<5} {1:<13} {2}'.format(student.id, student.lastName + ", " + student.firstName, student.test2)
+                t = '{0:<5} {1:<14} {2}'.format(student.id, student.lastName + ", " + student.firstName, student.test2)
                 print(str(t).strip("\n"))
             break
         else:
             print("Your input is error. Please input again.")
-            option = raw_input("Please input the component you want to see(A1, A2, PR, T1, T2):")
+            option = input("Please input the component you want to see(A1, A2, PR, T1, T2):")
             option = option.lower()
 
 
 def process_option2(students, fullPoint):
     option = input("Please input the component you want to see(A1, A2, PR, T1, T2):")
     option = option.lower()
-    while option == "a1" or option == "a2" or option == "pr" or option == "t1" or option == "t2":
+    while 1:
         if option == "a1":
             sum = 0
+            num = 0
             for student in students:
-                if student.a1!="":
+                if student.a1 != "":
                     sum += float(student.a1)
-            average = sum / len(students)
-            aver = "A1 average:" + str(average) + "/" + str(fullPoint.A1)
+                    num += 1
+            average = sum / num
+            aver = "A1 average:" + str(round(average, 2)) + "/" + str(fullPoint.A1)
             return aver
         elif option == "a2":
             sum = 0
+            num = 0
             for student in students:
                 if student.a2 != "":
                     sum += float(student.a2)
-            average = sum / len(students)
-            aver = "A2 average:" + str(average) + "/" + str(fullPoint.A2)
+                    num += 1
+            average = sum / num
+            aver = "A2 average:" + str(round(average, 2)) + "/" + str(fullPoint.A2)
             return aver
         elif option == "pr":
             sum = 0
+            num = 0
             for student in students:
                 if student.project != "":
                     sum += float(student.project)
-            average = sum / len(students)
-            aver = "PR average:" + str(average) + "/" + str(fullPoint.PR)
+                    num += 1
+            average = sum / num
+            aver = "PR average:" + str(round(average, 2)) + "/" + str(fullPoint.PR)
             return aver
         elif option == "t1":
             sum = 0
+            num = 0
             for student in students:
                 if student.test1 != "":
                     sum += float(student.test1)
-            average = sum / len(students)
-            aver = "T1 average:" + str(average) + "/" + str(fullPoint.T1)
+                    num += 1
+            average = sum / num
+            aver = "T1 average:" + str(round(average, 2)) + "/" + str(fullPoint.T1)
             return aver
         elif option == "t2":
             sum = 0
+            num = 0
             for student in students:
                 if student.test2 != "":
                     sum += float(student.test2)
-            average = sum / len(students)
-            aver = "T2 average:" + str(average) + "/" + str(fullPoint.T2)
+                    num += 1
+            average = sum / num
+            aver = "T2 average:" + str(round(average, 2)) + "/" + str(fullPoint.T2)
             return aver
         else:
             print("Your input is error. Please input again.")
-            option = raw_input("Please input the component you want to see(A1, A2, PR, T1, T2):")
+            option = input("Please input the component you want to see(A1, A2, PR, T1, T2):")
             option = option.lower()
 
 
@@ -228,14 +238,14 @@ def process_option3(students):
 def process_option4(students):
     option = input("Please select sort orders(LT/GR):")
     option = option.lower()
-    while option == "lt" or option == "gr":
+    while 1:
         if option == "lt":
             return process_option3(sort_based_on_name(students))
         elif option == "gr":
             return process_option3(sort_based_on_score(students))
         else:
             print("Your input is error. Please input again.")
-            option = raw_input("Please select sort orders(LT/GR):")
+            option = input("Please select sort orders(LT/GR):")
             option = option.lower()
 
 
